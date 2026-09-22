@@ -5,6 +5,9 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  # Permite republicar pelo botão "Run workflow" sem precisar de um commit novo
+  # — útil quando o que mudou foi um secret, não o código.
+  workflow_dispatch:
 
 # Um push novo no mesmo branch cancela a execução anterior: sem fila de builds
 # obsoletos consumindo minutos do runner.
@@ -93,7 +96,7 @@ jobs:
           NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://vitorialuiza.dev' }}
 
   deploy:
-    name: ${{ github.event_name == 'push' && 'Deploy de produção' || 'Deploy de preview' }}
+    name: ${{ github.event_name == 'pull_request' && 'Deploy de preview' || 'Deploy de produção' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -102,11 +105,11 @@ jobs:
 
     # PR vindo de fork não tem acesso aos secrets; pular evita falha enganosa.
     if: >-
-      github.event_name == 'push' ||
+      github.event_name != 'pull_request' ||
       github.event.pull_request.head.repo.full_name == github.repository
 
     environment:
-      name: ${{ github.event_name == 'push' && 'production' || 'preview' }}
+      name: ${{ github.event_name == 'pull_request' && 'preview' || 'production' }}
       url: ${{ steps.publish.outputs.url }}
 
     permissions:
@@ -116,8 +119,8 @@ jobs:
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-      VERCEL_ENV: ${{ github.event_name == 'push' && 'production' || 'preview' }}
-      PROD_FLAG: ${{ github.event_name == 'push' && '--prod' || '' }}
+      VERCEL_ENV: ${{ github.event_name == 'pull_request' && 'preview' || 'production' }}
+      PROD_FLAG: ${{ github.event_name != 'pull_request' && '--prod' || '' }}
 
     steps:
       - name: Checkout

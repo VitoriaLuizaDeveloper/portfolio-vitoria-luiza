@@ -259,6 +259,10 @@ build    ──┘
 - **deploy** — só roda se os dois passarem. Push em `main` vai para produção;
   PR gera preview e comenta a URL no próprio PR.
 
+O workflow também aceita execução manual (**Actions → CI/CD → Run workflow**),
+que publica em produção. É o caminho para republicar quando o que mudou foi um
+secret ou uma variável de ambiente, e não o código.
+
 `concurrency` com `cancel-in-progress` cancela execuções obsoletas quando chega
 um push novo no mesmo branch.
 
