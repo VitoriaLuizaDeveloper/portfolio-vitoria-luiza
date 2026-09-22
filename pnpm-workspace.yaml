@@ -1,0 +1,6 @@
+# pnpm >= 10 bloqueia scripts de postinstall por padrão (proteção contra
+# ataques de supply chain). Só os pacotes abaixo — todos com binários nativos
+# legítimos — têm permissão para compilar durante o install.
+allowBuilds:
+  esbuild: true
+  unrs-resolver: true

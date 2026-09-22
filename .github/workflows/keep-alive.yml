@@ -1,0 +1,21 @@
+name: Keep project APIs awake
+
+# Render's free tier spins a web service down after ~15 min without traffic; the
+# next real request then pays a 30-60s cold start. Pinging well under that window
+# keeps the instance warm so visitors never see the delay.
+#
+# Add one curl line per API below as more projects get deployed on Render/Railway/etc.
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping pass-in API (Render)
+        run: |
+          curl -sf -o /dev/null -w "pass-in API -> %{http_code} (%{time_total}s)\n" \
+            "https://api-pass-in-prod.onrender.com/events/9e9bd979-9d10-4915-b339-3786b1634f33/attendees" \
+            || echo "pass-in API did not respond in time (likely mid cold-start) - this is expected occasionally and not a failure"

@@ -1,0 +1,14 @@
+# Artefatos de build e dependências
+.next/
+out/
+build/
+coverage/
+node_modules/
+
+# Lockfiles e gerados
+pnpm-lock.yaml
+next-env.d.ts
+*.tsbuildinfo
+
+# Binários
+public/
