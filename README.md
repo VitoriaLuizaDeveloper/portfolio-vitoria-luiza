@@ -107,7 +107,7 @@ pnpm build && pnpm start
 | `pnpm lint:fix`      | ESLint corrigindo o que é automatizável                     |
 | `pnpm format`        | Formata o projeto com Prettier                              |
 | `pnpm format:check`  | Verifica formatação sem alterar arquivos (usado no CI)      |
-| `pnpm typecheck`     | `tsc --noEmit`                                              |
+| `pnpm typecheck`     | Gera os tipos de rota do Next e roda `tsc --noEmit`         |
 | `pnpm test`          | Testes uma vez                                              |
 | `pnpm test:watch`    | Testes em modo watch                                        |
 | `pnpm test:coverage` | Testes com relatório de cobertura                           |
