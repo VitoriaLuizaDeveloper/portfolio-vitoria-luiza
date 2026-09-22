@@ -282,19 +282,36 @@ Next e ferramentas de desenvolvimento) e mensais para as GitHub Actions.
 
 ## Deploy
 
-Hospedado na [Vercel](https://vercel.com).
+Hospedado na [Vercel](https://vercel.com), publicado pelo job `deploy` do
+`ci.yml` — nunca pela integração Git da Vercel. Assim nada chega em produção
+sem antes passar por lint, tipos, testes e build.
 
-O `ci.yml` já traz o job de deploy via CLI da Vercel. Para ativá-lo, cadastre em
-**Settings → Secrets and variables → Actions**:
+`vercel.json` desliga o deploy automático da Vercel (`git.deploymentEnabled`),
+o que mantém a garantia de pé mesmo que o projeto seja conectado ao repositório
+um dia: quem publica é o CI, e só depois que os jobs verdes.
 
-| Secret              | Onde encontrar                                        |
-| ------------------- | ----------------------------------------------------- |
-| `VERCEL_TOKEN`      | vercel.com/account/tokens                             |
-| `VERCEL_ORG_ID`     | `.vercel/project.json`, depois de rodar `vercel link` |
-| `VERCEL_PROJECT_ID` | `.vercel/project.json`, depois de rodar `vercel link` |
+### Configuração inicial
 
-> Se preferir a integração Git nativa da Vercel, remova o job `deploy` do
-> `ci.yml` — manter os dois gera deploys duplicados.
+O projeto na Vercel é criado pelo CLI, sem conectar o Git:
+
+```bash
+pnpm dlx vercel@latest login
+pnpm dlx vercel@latest link --yes --project portfolio-vitoria-luiza
+```
+
+O `link` grava `.vercel/project.json` (fora do versionamento) com os IDs que os
+secrets pedem. Cadastre em **Settings → Secrets and variables → Actions**:
+
+| Secret              | Onde encontrar                              |
+| ------------------- | ------------------------------------------- |
+| `VERCEL_TOKEN`      | vercel.com/account/settings/tokens          |
+| `VERCEL_ORG_ID`     | campo `orgId` do `.vercel/project.json`     |
+| `VERCEL_PROJECT_ID` | campo `projectId` do `.vercel/project.json` |
+
+E `NEXT_PUBLIC_SITE_URL` em dois lugares, porque são dois builds diferentes:
+
+- **Vercel** (Settings → Environment Variables) — é lá que roda o build publicado
+- **GitHub**, na aba _Variables_ (não Secrets) — usada pelo job `build` do CI
 
 ---
 
