@@ -3,6 +3,7 @@
 out/
 build/
 coverage/
+.vercel/
 node_modules/
 
 # Lockfiles e gerados
