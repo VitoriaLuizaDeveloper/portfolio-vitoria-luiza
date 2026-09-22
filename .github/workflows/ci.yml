@@ -126,6 +126,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
+      # O `vercel build` instala as dependências do projeto, e o runner não vem
+      # com pnpm. Sem estes dois passos ele falha antes de compilar qualquer coisa.
+      - name: Configura pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Configura Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v5
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
       - name: Instala Vercel CLI
         run: npm install --global vercel@latest
 
