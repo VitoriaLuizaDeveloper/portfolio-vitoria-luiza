@@ -3,7 +3,6 @@
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import type { ReactNode, MouseEvent } from "react";
 
-/** Diâmetro do brilho que acompanha o cursor dentro do cartão. */
 const GLOW = 440;
 
 export function TiltCard({ children, className }: { children: ReactNode; className?: string }) {
@@ -22,7 +21,6 @@ export function TiltCard({ children, className }: { children: ReactNode; classNa
     const relX = (e.clientX - rect.left) / rect.width;
     const relY = (e.clientY - rect.top) / rect.height;
 
-    // O brilho é movido por transform; a posição é o canto do círculo, não o centro.
     rawGlowX.set(relX * rect.width - GLOW / 2);
     rawGlowY.set(relY * rect.height - GLOW / 2);
     rawRotateY.set((relX - 0.5) * 14);
@@ -32,7 +30,6 @@ export function TiltCard({ children, className }: { children: ReactNode; classNa
   function handleMouseLeave() {
     rawRotateX.set(0);
     rawRotateY.set(0);
-    // O brilho não precisa voltar ao centro: a opacidade já o apaga na saída.
   }
 
   return (

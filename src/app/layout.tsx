@@ -67,7 +67,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col">
         <LanguageProvider>
           <Navbar />
-          <main className="flex-1 md:pl-20">{children}</main>
+          <main className="flex-1 md:pl-20 2xl:pr-20">{children}</main>
           <Footer />
         </LanguageProvider>
       </body>

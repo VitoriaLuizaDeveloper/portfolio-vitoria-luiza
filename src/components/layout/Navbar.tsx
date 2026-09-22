@@ -19,7 +19,6 @@ const icons: Record<SectionId, typeof Home> = {
   contato: Mail,
 };
 
-/** Marca no menu a seção que está ocupando o centro da tela. */
 function useActiveSection() {
   const [active, setActive] = useState<SectionId>(SECTION_IDS[0]);
 
@@ -46,12 +45,6 @@ function useActiveSection() {
   return active;
 }
 
-/**
- * Um item do menu. Os dois menus (trilho lateral e barra inferior) ficam
- * montados ao mesmo tempo e só alternam por media query, então cada um traz o
- * próprio `pillId` — dois `layoutId` iguais na árvore fariam o framer-motion
- * animar a pílula de um menu até a posição do outro.
- */
 function NavLink({
   id,
   label,
@@ -99,17 +92,15 @@ export function Navbar() {
   const { t } = useLanguage();
   const active = useActiveSection();
 
-  // A ordem e a completude do menu vêm de `SECTION_IDS`; o dicionário só traduz.
   const links = SECTION_IDS.map((id) => ({ id, label: t.nav.labels[id] }));
 
   return (
     <>
       <LanguageToggle className="glass fixed top-4 right-4 z-50 sm:top-6 sm:right-6 md:hidden" />
 
-      {/* Desktop: trilho fixo à esquerda; cada ícone revela o rótulo no hover. */}
       <nav
         aria-label={t.nav.primary}
-        className="glass fixed top-1/2 left-5 z-50 hidden -translate-y-1/2 flex-col items-center gap-1 rounded-2xl p-2 md:flex"
+        className="glass fixed top-1/2 left-[max(1.25rem,calc(50%_-_44.5rem))] z-50 hidden -translate-y-1/2 flex-col items-center gap-1 rounded-2xl p-2 md:flex"
       >
         {links.map((link) => (
           <NavLink
@@ -126,7 +117,6 @@ export function Navbar() {
         <LanguageToggle compact />
       </nav>
 
-      {/* Mobile: barra de ícones ancorada embaixo, sem sobrepor o conteúdo. */}
       <nav
         aria-label={t.nav.primary}
         className="glass fixed inset-x-4 bottom-4 z-50 flex items-center justify-between rounded-2xl p-2 md:hidden"
