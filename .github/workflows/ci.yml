@@ -26,7 +26,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: Configura pnpm
         # A versão vem do campo "packageManager" do package.json.
@@ -68,7 +68,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: Configura pnpm
         uses: pnpm/action-setup@v4
@@ -124,7 +124,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       # O `vercel build` instala as dependências do projeto, e o runner não vem
       # com pnpm. Sem estes dois passos ele falha antes de compilar qualquer coisa.
