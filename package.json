@@ -28,7 +28,7 @@
     "@icons-pack/react-simple-icons": "^13.15.1",
     "framer-motion": "^13.4.0",
     "lucide-react": "^1.46.0",
-    "next": "16.3.5",
+    "next": "16.3.6",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },
@@ -46,7 +46,7 @@
     "@vitejs/plugin-react": "^5.1.0",
     "@vitest/coverage-v8": "^3.2.4",
     "eslint": "^9",
-    "eslint-config-next": "16.3.5",
+    "eslint-config-next": "16.3.6",
     "husky": "^9.1.7",
     "jsdom": "^27.0.0",
     "lint-staged": "^16.2.6",
